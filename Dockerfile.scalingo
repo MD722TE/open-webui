@@ -3,13 +3,13 @@ FROM python:3.10-slim AS builder
 
 WORKDIR /app
 
-# Installer les dépendances système minimales nécessaires
+# Installer les dépendances système minimales
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copier uniquement les fichiers nécessaires pour installer les dépendances
-COPY backend/requirements.txt .
+# Copier uniquement le fichier requirements.txt
+COPY requirements.txt .
 
 # Installer les dépendances dans un environnement virtuel
 RUN python -m venv /opt/venv
@@ -17,7 +17,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Étape finale - image légère pour l'exécution
+# Étape finale - image ultra-légère
 FROM python:3.10-slim
 
 WORKDIR /app
@@ -26,8 +26,14 @@ WORKDIR /app
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Copier uniquement les fichiers backend nécessaires
-COPY backend /app/backend
+# Copier uniquement les fichiers backend essentiels
+COPY backend/main.py backend/
+COPY backend/api backend/api
+COPY backend/core backend/core
+COPY backend/db backend/db
+COPY backend/models backend/models
+COPY backend/utils backend/utils
+COPY backend/config.py backend/
 
 # Définir les variables d'environnement
 ENV PORT=8080
