@@ -1,15 +1,4 @@
-# Exclure uniquement les dossiers volumineux non essentiels
-frontend/
+# Exclure uniquement les dossiers volumineux
 docs/
-tests/
-examples/
-notebooks/
-.git/
 .github/
 backend/data/
-backend/models/local/
-backend/uploads/
-backend/downloads/
-backend/cache/
-**/__pycache__/
-**/*.pyc
