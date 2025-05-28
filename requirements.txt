@@ -1,140 +1,152 @@
+# Dépendances core pour FastAPI
 fastapi==0.115.7
 uvicorn[standard]==0.34.0
 pydantic==2.10.6
 python-multipart==0.0.20
 
-python-socketio==5.13.0
+# Authentification et sécurité
 python-jose==3.4.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.3.0
+argon2-cffi==23.1.0
+PyJWT[crypto]==2.10.1
+authlib==1.4.1
 
+# Base de données et ORM
+sqlalchemy==2.0.38
+alembic==1.14.0
+psycopg2-binary==2.9.9
+pgvector==0.4.0
+
+# Utilitaires essentiels
 requests==2.32.3
 aiohttp==3.11.11
 async-timeout
 aiocache
 aiofiles
-
-sqlalchemy==2.0.38
-alembic==1.14.0
-peewee==3.17.9
-peewee-migrate==1.12.2
-psycopg2-binary==2.9.9
-pgvector==0.4.0
-PyMySQL==1.1.1
-bcrypt==4.3.0
-
-pymongo
-redis
-boto3==1.35.53
-
-argon2-cffi==23.1.0
-APScheduler==3.10.4
-
-RestrictedPython==8.0
-
 loguru==0.7.3
 asgiref==3.8.1
+APScheduler==3.10.4
 
-# AI libraries
+# Communication et sockets
+python-socketio==5.13.0
+
+# Intégrations AI minimales
 openai
 anthropic
-google-generativeai==0.8.4
 tiktoken
 
+# LangChain (version minimale)
 langchain==0.3.24
-langchain-community==0.3.23
 
-fake-useragent==2.1.0
-chromadb==0.6.3
-pymilvus==2.5.0
-qdrant-client~=1.12.0
-opensearch-py==2.8.0
-playwright==1.49.1 # Caution: version must match docker-compose.playwright.yaml
-elasticsearch==9.0.1
-pinecone==6.0.2
-
-transformers
-sentence-transformers==4.1.0
-accelerate
-colbert-ai==0.2.21
-einops==0.8.1
-
-
-ftfy==6.2.3
+# Traitement de documents basique
 pypdf==4.3.1
-fpdf2==2.8.2
-pymdown-extensions==10.14.2
-docx2txt==0.8
-python-pptx==1.0.0
-unstructured==0.16.17
-nltk==3.9.1
 Markdown==3.7
-pypandoc==1.15
-pandas==2.2.3
-openpyxl==3.1.5
-pyxlsb==1.0.10
-xlrd==2.0.1
 validators==0.34.0
-psutil
-sentencepiece
-soundfile==0.13.1
-azure-ai-documentintelligence==1.0.0
 
-pillow==11.1.0
-opencv-python-headless==4.11.0.86
-rapidocr-onnxruntime==1.4.4
-rank-bm25==0.2.2
+# Redis pour la mise en cache
+redis
 
-onnxruntime==1.20.1
+# Utilitaires de restriction
+RestrictedPython==8.0
 
-faster-whisper==1.1.1
+# Commentez ou supprimez les bibliothèques suivantes pour réduire la taille
 
-PyJWT[crypto]==2.10.1
-authlib==1.4.1
+# Bases de données alternatives
+# peewee==3.17.9
+# peewee-migrate==1.12.2
+# PyMySQL==1.1.1
+# pymongo
+# boto3==1.35.53
 
-black==25.1.0
-langfuse==2.44.0
-youtube-transcript-api==1.0.3
-pytube==15.0.0
+# IA et modèles volumineux
+# google-generativeai==0.8.4
+# langchain-community==0.3.23
+# transformers
+# sentence-transformers==4.1.0
+# accelerate
+# colbert-ai==0.2.21
+# einops==0.8.1
 
-extract_msg
-pydub
-duckduckgo-search~=8.0.0
+# Bases de données vectorielles
+# chromadb==0.6.3
+# pymilvus==2.5.0
+# qdrant-client~=1.12.0
+# opensearch-py==2.8.0
+# elasticsearch==9.0.1
+# pinecone==6.0.2
 
-## Google Drive
-google-api-python-client
-google-auth-httplib2
-google-auth-oauthlib
+# Traitement de documents avancé
+# fpdf2==2.8.2
+# pymdown-extensions==10.14.2
+# docx2txt==0.8
+# python-pptx==1.0.0
+# unstructured==0.16.17
+# nltk==3.9.1
+# pypandoc==1.15
+# pandas==2.2.3
+# openpyxl==3.1.5
+# pyxlsb==1.0.10
+# xlrd==2.0.1
+# ftfy==6.2.3
 
-## Tests
-docker~=7.1.0
-pytest~=8.3.5
-pytest-docker~=3.1.1
+# Traitement d'images
+# pillow==11.1.0
+# opencv-python-headless==4.11.0.86
+# rapidocr-onnxruntime==1.4.4
 
-googleapis-common-protos==1.63.2
-google-cloud-storage==2.19.0
+# Traitement audio
+# faster-whisper==1.1.1
+# soundfile==0.13.1
+# pydub
 
-azure-identity==1.21.0
-azure-storage-blob==12.24.1
+# Intégrations externes
+# fake-useragent==2.1.0
+# playwright==1.49.1
+# rank-bm25==0.2.2
+# onnxruntime==1.20.1
+# black==25.1.0
+# langfuse==2.44.0
+# youtube-transcript-api==1.0.3
+# pytube==15.0.0
+# extract_msg
+# duckduckgo-search~=8.0.0
 
+# Intégrations Google
+# google-api-python-client
+# google-auth-httplib2
+# google-auth-oauthlib
+# googleapis-common-protos==1.63.2
+# google-cloud-storage==2.19.0
 
-## LDAP
-ldap3==2.9.1
+# Intégrations Azure
+# azure-ai-documentintelligence==1.0.0
+# azure-identity==1.21.0
+# azure-storage-blob==12.24.1
 
-## Firecrawl
-firecrawl-py==1.12.0
+# Tests
+# docker~=7.1.0
+# pytest~=8.3.5
+# pytest-docker~=3.1.1
 
-# Sougou API SDK(Tencentcloud SDK)
-tencentcloud-sdk-python==3.0.1336
+# LDAP
+# ldap3==2.9.1
 
-## Trace
-opentelemetry-api==1.32.1
-opentelemetry-sdk==1.32.1
-opentelemetry-exporter-otlp==1.32.1
-opentelemetry-instrumentation==0.53b1
-opentelemetry-instrumentation-fastapi==0.53b1
-opentelemetry-instrumentation-sqlalchemy==0.53b1
-opentelemetry-instrumentation-redis==0.53b1
-opentelemetry-instrumentation-requests==0.53b1
-opentelemetry-instrumentation-logging==0.53b1
-opentelemetry-instrumentation-httpx==0.53b1
-opentelemetry-instrumentation-aiohttp-client==0.53b1
+# Firecrawl
+# firecrawl-py==1.12.0
+
+# Sougou API SDK
+# tencentcloud-sdk-python==3.0.1336
+
+# Traçage et monitoring
+# opentelemetry-api==1.32.1
+# opentelemetry-sdk==1.32.1
+# opentelemetry-exporter-otlp==1.32.1
+# opentelemetry-instrumentation==0.53b1
+# opentelemetry-instrumentation-fastapi==0.53b1
+# opentelemetry-instrumentation-sqlalchemy==0.53b1
+# opentelemetry-instrumentation-redis==0.53b1
+# opentelemetry-instrumentation-requests==0.53b1
+# opentelemetry-instrumentation-logging==0.53b1
+# opentelemetry-instrumentation-httpx==0.53b1
+# opentelemetry-instrumentation-aiohttp-client==0.53b1
