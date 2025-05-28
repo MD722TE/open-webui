@@ -1,0 +1,9 @@
+.git
+.github
+docs
+tests
+*.md
+*.txt
+!requirements.txt
+!runtime.txt
+frontend/node_modules
