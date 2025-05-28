@@ -1,27 +1,15 @@
-# Exclure tout par défaut
-*
-
-# Inclure uniquement les fichiers essentiels du backend
-!backend/main.py
-!backend/api/**
-!backend/core/**
-!backend/db/**
-!backend/models/**
-!backend/utils/**
-!backend/config.py
-!backend/__init__.py
-
-# Fichiers de configuration essentiels
-!Procfile
-!requirements.txt
-!runtime.txt
-!.slugignore
-
-# Exclure explicitement les dossiers volumineux même s'ils sont dans les chemins inclus
-backend/data/**
-backend/models/local/**
-backend/uploads/**
-backend/downloads/**
-backend/cache/**
-**/__pycache__/**
+# Exclure uniquement les dossiers volumineux non essentiels
+frontend/
+docs/
+tests/
+examples/
+notebooks/
+.git/
+.github/
+backend/data/
+backend/models/local/
+backend/uploads/
+backend/downloads/
+backend/cache/
+**/__pycache__/
 **/*.pyc
