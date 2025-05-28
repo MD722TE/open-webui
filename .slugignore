@@ -1,9 +1,47 @@
+# Dossiers de développement et documentation
 .git
 .github
 docs
 tests
+examples
+notebooks
+__pycache__
+*.pyc
+
+# Fichiers Docker (ignorés pour le déploiement Scalingo)
+Dockerfile
+docker-compose.yaml
+.dockerignore
+
+# Fichiers de documentation
 *.md
-*.txt
+*.rst
+LICENSE
+AUTHORS
+CHANGELOG
+CONTRIBUTING
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Garder les fichiers essentiels
 !requirements.txt
 !runtime.txt
+!Procfile
+
+# Frontend (si vous utilisez l'API backend uniquement)
 frontend/node_modules
+frontend/dist
+frontend/public
+frontend/.nuxt
+frontend/.next
+frontend/build
+
+# Dossiers volumineux potentiels
+backend/data
+backend/models
+backend/uploads
+backend/downloads
+backend/cache
