@@ -26,8 +26,9 @@ WORKDIR /app
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Copier uniquement les fichiers backend nécessaires
-COPY backend /app/backend
+# Créer un fichier main.py minimal
+RUN mkdir -p /app/backend
+RUN echo 'from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get("/")\ndef read_root():\n    return {"Hello": "World"}' > /app/backend/main.py
 
 # Définir les variables d'environnement
 ENV PORT=8080
@@ -41,4 +42,5 @@ RUN mkdir -p /app/backend/data
 EXPOSE 8080
 
 # Commande de démarrage
-CMD cd backend && uvicorn main_minimal:app --host 0.0.0.0 --port $PORT
+CMD cd backend && uvicorn main:app --host 0.0.0.0 --port ${PORT}
+
