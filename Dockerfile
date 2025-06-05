@@ -1,30 +1,36 @@
-# Étape 1 : Build du frontend
-FROM node:20-alpine AS frontend-builder
-WORKDIR /app/webui
-COPY webui/package*.json ./
-RUN npm ci
-COPY webui/ .
-RUN npm run build
+# Étape 1 : Build allégé dans python:slim
+FROM python:3.11-slim AS builder
 
-# Étape 2 : Build du backend minimal
-FROM python:3.11-slim AS final
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+# Dépendances système minimales
+RUN apt-get update && apt-get install -y \
+    gcc build-essential libffi-dev libsndfile1 \
+    libgl1 libglib2.0-0 libsm6 libxext6 libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installe juste ce qui est nécessaire
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libffi-dev build-essential curl && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Créer l'environnement d'installation
+WORKDIR /app
+COPY requirements.txt .
+
+# Utilisation de pip cache pour accélérer les builds
+RUN pip install --upgrade pip \
+ && pip install --prefix=/install --no-cache-dir -r requirements.prod.txt
+
+# Étape 2 : Image finale ultra légère
+FROM python:3.11-slim
+
+# Dépendances runtime minimales (ex: soundfile, opencv, whisper)
+RUN apt-get update && apt-get install -y \
+    libsndfile1 libgl1 libglib2.0-0 libsm6 libxext6 libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copie des dépendances installées
+COPY --from=builder /install /usr/local
 
 WORKDIR /app
+COPY . .
 
-# Copie uniquement le backend utile
-COPY backend/ ./backend/
-COPY --from=frontend-builder /app/webui/dist ./webui/dist/
+# Exposition port FastAPI
+EXPOSE 8000
 
-# Installe les deps Python sans cache
-COPY backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-EXPOSE 3000
-CMD ["python", "-m", "backend.app"]
+# Commande de démarrage (modifiable si vous utilisez Gunicorn)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
