@@ -1,25 +1,15 @@
-# Général
+.git
+node_modules
 __pycache__
 *.pyc
 *.pyo
-*.pyd
-*.db
 *.log
-*.lock
-
-# Node
-node_modules/
-webui/node_modules/
-webui/.vite/
-webui/.svelte-kit/
-
-# IDE
-.DS_Store
-.idea/
-.vscode/
-
-# GitHub / docs
-.github/
-docs/
-tests/
-*.md
+webui/.vite
+webui/.svelte-kit
+webui/node_modules
+docs
+tests
+.vscode
+.idea
+uploads
+*.db
