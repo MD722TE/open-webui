@@ -1,33 +1,26 @@
-# Étape 1 : build du frontend
-FROM node:20-alpine AS build-ui
+# Étape 1 : Build frontend
+FROM node:20-alpine AS frontend
 WORKDIR /app/webui
 COPY webui/ .
 RUN npm ci && npm run build
 
-# Étape 2 : backend Python
-FROM python:3.11-slim AS runtime
+# Étape 2 : Backend Python minimal
+FROM python:3.11-slim AS backend
 
-# Réduction de la taille : variables d'env, désactivation de pip cache, nettoyage
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
-# Dépendances système minimales
+# Dépendances système réduites
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential libffi-dev \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+    libffi-dev build-essential \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
-# Copie du backend
 COPY backend/ ./backend
+COPY --from=frontend /app/webui/dist ./webui/dist
 
-# Installation des dépendances Python
+# Installe les dépendances Python (nettoie le reste)
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Copie des assets web compilés
-COPY --from=build-ui /app/webui/dist ./webui/dist
-
-# Commande de lancement
 CMD ["python", "-m", "backend.app"]
