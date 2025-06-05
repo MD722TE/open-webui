@@ -2,10 +2,16 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Installer lib de base uniquement
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+COPY requirements-prod.txt .
+
+RUN pip install --no-cache-dir -r requirements-prod.txt
 
 COPY . .
 
-# Lance le Typer CLI et sa commande `serve`, qui appellera Uvicorn avec app = open_webui.main:app
-CMD ["python", "-m", "open_webui", "serve"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
