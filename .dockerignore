@@ -12,3 +12,16 @@ uploads
 .idea
 .vscode
 .DS_Store
+__pycache__/
+.ipynb_checkpoints/
+*.ipynb
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+*.csv
+*.zip
+*.tar.gz
+tests/
+data/
+models/
