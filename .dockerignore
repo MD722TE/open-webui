@@ -1,32 +1,25 @@
-.github
-.DS_Store
-docs
-kubernetes
-node_modules
-/.svelte-kit
-/package
-.env
-.env.*
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
+# Général
 __pycache__
-.idea
-venv
-_old
-uploads
-.ipynb_checkpoints
-**/*.db
-_test
-backend/data/*
 *.pyc
 *.pyo
 *.pyd
-.env
+*.db
 *.log
-data/
-models/
+*.lock
+
+# Node
 node_modules/
+webui/node_modules/
+webui/.vite/
+webui/.svelte-kit/
+
+# IDE
+.DS_Store
+.idea/
 .vscode/
-.git/
-*.safetensors
-*.bin
+
+# GitHub / docs
+.github/
+docs/
+tests/
+*.md
