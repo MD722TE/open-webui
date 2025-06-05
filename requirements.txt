@@ -7,3 +7,4 @@ python-dotenv
 typer
 sqlalchemy
 aiocache
+aiohttp>=3.8
