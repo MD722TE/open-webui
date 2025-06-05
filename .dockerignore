@@ -18,3 +18,15 @@ uploads
 **/*.db
 _test
 backend/data/*
+*.pyc
+*.pyo
+*.pyd
+.env
+*.log
+data/
+models/
+node_modules/
+.vscode/
+.git/
+*.safetensors
+*.bin
