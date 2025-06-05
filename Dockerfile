@@ -1,19 +1,31 @@
-FROM python:3.10-slim
+# Étape 1 : build (optionnelle si tu n'as pas de build à faire)
+FROM python:3.10-slim AS base
 
-# Variables d'environnement pour éviter les questions interactives
+# Empêche Python de créer des fichiers .pyc
+ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Dépendances système nécessaires (ajuste si besoin)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crée le dossier de l’app
 WORKDIR /app
 
-# Copier requirements.txt et installer les dépendances
-COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+# Copie les dépendances Python
+COPY requirements.txt .
 
-# Copier tout le code
-COPY . /app
+# Installation des dépendances
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Exposer le port 8080 (par convention)
-EXPOSE 8080
+# Copie tout le code source
+COPY . .
 
-# Commande de démarrage (lire le PORT env var via uvicorn)
-CMD ["uvicorn", "open_webui.main:app", "--host", "0.0.0.0", "--port", "8080"]
+# S’assure que backend/ et open_webui/ sont bien des packages
+RUN touch backend/__init__.py && touch backend/open_webui/__init__.py
+
+# Commande par défaut
+CMD ["uvicorn", "backend.open_webui.main:app", "--host", "0.0.0.0", "--port", "8000"]
