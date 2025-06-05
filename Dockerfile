@@ -1,27 +1,24 @@
-# Utiliser une image de base légère
-FROM node:20-slim
+# Étape 1 : build dans une image légère
+FROM python:3.10-slim as builder
 
-# Créer un utilisateur non-root
-RUN useradd -m openwebui
+WORKDIR /app
 
-WORKDIR /home/openwebui
+# Installer uniquement les outils nécessaires pour l'installation des paquets
+RUN apt-get update && apt-get install -y gcc build-essential libffi-dev && rm -rf /var/lib/apt/lists/*
 
-# Télécharger le code source depuis le dépôt
-RUN apt-get update && apt-get install -y git && \
-    git clone https://github.com/open-webui/open-webui.git . && \
-    rm -rf .git
+COPY requirements.txt .
 
-# Installer les dépendances
-RUN npm install --omit=dev
+RUN pip install --upgrade pip && pip install --prefix=/install -r requirements.txt
 
-# Supprimer Ollama et ses références
-RUN rm -rf server/ollama* docker/ollama*
+# Étape 2 : Image finale ultra-légère
+FROM python:3.10-slim
 
-# Exposer le port
-EXPOSE 3000
+ENV PYTHONUNBUFFERED=1
 
-# Passer à l'utilisateur non-root
-USER openwebui
+WORKDIR /app
+
+COPY --from=builder /install /usr/local
+COPY . .
 
 # Lancer l'application
-CMD ["npm", "run", "start"]
+CMD ["uvicorn", "backend.open_webui.main:app", "--host", "0.0.0.0", "--port", "8080"]
