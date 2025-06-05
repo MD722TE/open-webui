@@ -1,61 +1,11 @@
-# Core FastAPI stack
 fastapi==0.115.7
 uvicorn[standard]==0.34.0
-pydantic==2.10.6
-python-multipart==0.0.20
-
-# Authentification & sécurité
-python-jose==3.4.0
-passlib[bcrypt]==1.7.4
-PyJWT[crypto]==2.10.1
-authlib==1.4.1
-
-# Web & I/O
-aiohttp==3.11.11
-aiofiles
-requests==2.32.3
-
-# Base de données (choix : PostgreSQL, MongoDB, Redis)
-sqlalchemy==2.0.38
-psycopg2-binary==2.9.9
-pymongo
-redis
-pgvector==0.4.0
-
-# AI minimal viable
-openai
-tiktoken
-transformers
+torch==2.7.1
+transformers==4.52.4
 sentence-transformers==4.1.0
-sentencepiece
-
-# PDF, DOCX, Excel parsing (essentiel)
-pypdf==4.3.1
-python-pptx==1.0.0
-docx2txt==0.8
-openpyxl==3.1.5
-
-# OCR + Vision
-opencv-python-headless==4.11.0.86
-pillow==11.1.0
-rapidocr-onnxruntime==1.4.4
 onnxruntime==1.20.1
-
-# Audio / transcription
-faster-whisper==1.1.1
-soundfile==0.13.1
-
-# Utilitaires
-loguru==0.7.3
-validators==0.34.0
-
-# Monitoring / observabilité (OpenTelemetry allégé)
-opentelemetry-api==1.32.1
-opentelemetry-sdk==1.32.1
-opentelemetry-exporter-otlp==1.32.1
-
-# Cloud SDKs essentiels
-boto3==1.35.53
-google-cloud-storage==2.19.0
-azure-identity==1.21.0
-azure-storage-blob==12.24.1
+python-multipart==0.0.20
+pydantic==2.10.6
+requests==2.32.3
+numpy==2.2.6
+scipy==1.15.3
