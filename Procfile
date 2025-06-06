@@ -1,1 +1,1 @@
-web: uvicorn backend.open_webui.main:app --host 0.0.0.0 --port ${PORT:-8000}
+web: PYTHONPATH=./backend uvicorn open_webui.main:app --host 0.0.0.0 --port 8080
