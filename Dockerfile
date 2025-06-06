@@ -1,32 +1,28 @@
-# syntax=docker/dockerfile:1
+# Étape de build
+FROM python:3.10-slim AS builder
 
-FROM python:3.10-slim
-
-# Préparer les dépendances de build si nécessaires
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc build-essential libffi-dev libssl-dev \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Créer un utilisateur non root
-RUN useradd -m -u 1000 appuser
-
-# Définir le répertoire de travail
+# Répertoire de travail
 WORKDIR /app
 
-# Copier uniquement les fichiers nécessaires à la prod
+# Copie et installation des dépendances
 COPY backend/requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
 
-# Installer les dépendances Python
-RUN pip install --no-cache-dir -r requirements.txt
+# Étape finale
+FROM python:3.10-slim
 
-# Copier le code backend
-COPY backend/ .
+WORKDIR /app
 
-# Définir le PYTHONPATH pour que le dossier backend soit vu comme racine
+# Copie des fichiers
+COPY --from=builder /root/.local /root/.local
+COPY backend/ ./backend/
+
+# Ajout du PYTHONPATH pour permettre les imports depuis /app/backend
 ENV PYTHONPATH="/app/backend:${PYTHONPATH}"
+ENV PATH="/root/.local/bin:${PATH}"
 
-# Passer à l'utilisateur non root
-USER appuser
+# Port par défaut pour Uvicorn
+EXPOSE 8080
 
-# Commande de démarrage
-CMD ["python", "main.py"]
+# Commande de lancement
+CMD ["uvicorn", "open_webui.main:app", "--host", "0.0.0.0", "--port", "8080"]
