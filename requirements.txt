@@ -10,4 +10,4 @@ aiocache
 aiohttp>=3.8
 itsdangerous>=2.1.2
 loguru
-
+markdown
