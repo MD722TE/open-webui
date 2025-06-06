@@ -12,3 +12,4 @@ itsdangerous>=2.1.2
 loguru
 markdown
 beautifulsoup4
+asgiref>=3.6.0
