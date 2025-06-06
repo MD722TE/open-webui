@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 # Préparer les dépendances de build si nécessaires
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -21,6 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copier le code backend
 COPY backend/ .
+
+# Définir le PYTHONPATH pour que le dossier backend soit vu comme racine
+ENV PYTHONPATH="/app/backend:${PYTHONPATH}"
 
 # Passer à l'utilisateur non root
 USER appuser
